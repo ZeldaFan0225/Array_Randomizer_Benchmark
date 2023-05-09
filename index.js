@@ -36,7 +36,7 @@ const runs = 1000000
 let index = 0
 
 for(const fn of benchmarkFunctions) {
-    console.log(`Testing function ${index+1}...`)
+    console.log(`Testing ${benchmarkFunctions[index].name} (${index})...`)
     for(let i = 0; i < runs; ++i) {
         const shuffled = fn(probe)
         if(shuffled.join("") === "length") console.log("length")
@@ -44,7 +44,7 @@ for(const fn of benchmarkFunctions) {
         if(i % 100000 === 0) console.log(`Finished iteration ${i}/${runs}`)
     }
 
-    console.log(`Done testing function ${index+1}`)
+    console.log(`Done testing ${benchmarkFunctions[index].name} (${index})...`)
 
     const res = results[index]
     const N = Object.keys(res).length
@@ -54,4 +54,4 @@ for(const fn of benchmarkFunctions) {
 }
 
 console.log("Calculating results...")
-console.log(`\n\n\nIterations: ${runs}\nTest Data length: ${probe.length}\nAmount of functions tested: ${benchmarkFunctions.length}\nFunctions ranked by deviation:\n${deviation.map((d, i) => ({d, f: benchmarkFunctions[i].name})).sort((a, b) => a.d-b.d).map(d => `${d.f} - ${d.d}`).join("\n")}\n\n` + results.map((r, i) => `Function: ${benchmarkFunctions[i].name}\nStandard Deviation: ${deviation[i]}\nPopulation Size:${Object.keys(r).length}\nTop random results:\n${Object.entries(r).sort(([_, a],[__, b]) => b-a).slice(0, 10).map(([k, v]) => `${k} - ${v}`).join("\n")}`).join("\n\n\n"))
+console.log(`\n\n\nIterations: ${runs}\nTest Data length: ${probe.length}\nAmount of functions tested: ${benchmarkFunctions.length}\nFunctions ranked by deviation:\n${deviation.map((d, i) => ({d, f: benchmarkFunctions[i].name})).sort((a, b) => a.d-b.d).map(d => `${d.f} - ${d.d}`).join("\n")}\n\n` + results.map((r, i) => `Function: ${benchmarkFunctions[i].name}\nStandard Deviation: ${deviation[i]}\nPopulation Size: ${Object.keys(r).length}\nTop random results:\n${Object.entries(r).sort(([_, a],[__, b]) => b-a).slice(0, 10).map(([k, v]) => `${k} - ${v}`).join("\n")}`).join("\n\n\n"))
